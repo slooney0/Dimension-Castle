@@ -4,8 +4,6 @@ using UnityEngine;
 public class DoorControllerScript : MonoBehaviour
 {
     [SerializeField] LayerMask player;
-    [SerializeField] GameObject lever1;
-    [SerializeField] GameObject lever2;
     private bool doorActive;
 
 

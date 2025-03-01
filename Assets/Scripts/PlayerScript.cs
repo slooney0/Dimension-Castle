@@ -8,29 +8,25 @@ public class PlayerScript : MonoBehaviour
 
     private float dirX;
     private float dirY;
-    private float playerSpeed = 7f;
+    private float playerSpeed = 6f;
     private float jumpHeight = 8f;
-
-    public static bool playerStandingBreakingBlock = false;
     public static bool rotation = true;
 
     [SerializeField] GameObject mCamera;
     [SerializeField] LayerMask jumpReset;
-    [SerializeField] LayerMask blockBreak;
     [SerializeField] SpriteRenderer sRend;
 
     // Ground Movement
     private Rigidbody rb;
-    public float MoveSpeed = 5f;
+    public float MoveSpeed = 8f;
     private float moveHorizontal;
     private float moveForward;
 
     // Jumping
-    public float jumpForce = 10f;
-    public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
-    public float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
+    public float jumpForce = 15f;
+    public float fallMultiplier = 1f; // Multiplies gravity when falling down
+    public float ascendMultiplier = 20f; // Multiplies gravity for ascending to peak of jump
     private bool isGrounded = true;
-    private bool isGroundedBreak = true;
     private float groundCheckTimer = 0f;
     private float groundCheckDelay = 0.2f;
     private float playerHeight;
@@ -44,7 +40,7 @@ public class PlayerScript : MonoBehaviour
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
-        raycastDistance = (playerHeight / 2) + 0.1f;
+        raycastDistance = (playerHeight / 2) + 0.15f;
 
         // Hides the mouse
         Cursor.lockState = CursorLockMode.Locked;
@@ -58,7 +54,12 @@ public class PlayerScript : MonoBehaviour
         {
             PlayerDead();
         }
-        
+
+        if (transform.position.y < -5)
+        {
+            PlayerDead();
+        }
+
         if (LeverScript.leverActive == false)
         {
             rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -106,17 +107,11 @@ public class PlayerScript : MonoBehaviour
 
             Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
             isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, jumpReset);
-            playerStandingBreakingBlock = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, blockBreak);
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             if (rotation == false)
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 rotation = true;
-            }
-
-            if (transform.position.y < -5)
-            {
-                PlayerDead();
             }
         }
         else
@@ -211,5 +206,7 @@ public class PlayerScript : MonoBehaviour
     {
         transform.position = new Vector3(0, 1.5f, 0);
         SpikeScript.playerDead = false;
+        LeverScript.resetLevers();
+        KeyScript.keyReset();
     }
 }

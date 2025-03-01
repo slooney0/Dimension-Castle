@@ -5,6 +5,7 @@ public class LeverScript : MonoBehaviour
 {
 
     public static bool leverActive = false;
+    public static bool resetLever = false;
 
     [SerializeField] BoxCollider bColl1;
     [SerializeField] BoxCollider bColl2;
@@ -35,9 +36,21 @@ public class LeverScript : MonoBehaviour
             CameraScript.rotation = false;
             lever2.SetActive(false);
         }
+        if (resetLever == true)
+        {
+            resetLever = false;
+            PlayerScript.rotation = false;
+            CameraScript.rotation = false;
+            lever1.SetActive(true);
+            lever2.SetActive(true);
+            leverActive = false;
+        }
     }
 
-
+    public static void resetLevers()
+    {
+        resetLever = true;
+    }
 
     bool IsActivated1()
     {
