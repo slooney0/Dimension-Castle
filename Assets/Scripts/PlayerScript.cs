@@ -44,7 +44,7 @@ public class PlayerScript : MonoBehaviour
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
-        raycastDistance = (playerHeight / 2) + 0.2f;
+        raycastDistance = (playerHeight / 2) + 0.1f;
 
         // Hides the mouse
         Cursor.lockState = CursorLockMode.Locked;
@@ -66,7 +66,15 @@ public class PlayerScript : MonoBehaviour
 
             dirX = Input.GetAxisRaw("Horizontal");
             dirY = Input.GetAxisRaw("Jump");
-            rb.linearVelocity = new Vector3(dirX * playerSpeed, rb.linearVelocity.y, 0);
+            
+            if (isGrounded & dirY == 0)
+            {
+                rb.linearVelocity = new Vector3(dirX * playerSpeed, 0, 0);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(dirX * playerSpeed, rb.linearVelocity.y, 0);
+            }
             
             if (dirX < 0)
             {
@@ -104,6 +112,11 @@ public class PlayerScript : MonoBehaviour
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 rotation = true;
+            }
+
+            if (transform.position.y < -5)
+            {
+                PlayerDead();
             }
         }
         else

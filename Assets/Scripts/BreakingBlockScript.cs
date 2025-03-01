@@ -9,10 +9,11 @@ public class BreakingBlockScript : MonoBehaviour
     private float regenTimer;
     private float regenCounter = 6;
     private float breakTimer;
-    private float breakCounter = 2;
+    private float breakCounter = 1;
 
     [SerializeField] MeshCollider mColl;
     [SerializeField] MeshRenderer mRend;
+    [SerializeField] GameObject bBlock;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class BreakingBlockScript : MonoBehaviour
             mColl.isTrigger = true;
             mRend.enabled = false;
             regenTimer = regenCounter;
+            bBlock.layer = 0;
         }
         if (broken == true)
         {
@@ -55,6 +57,7 @@ public class BreakingBlockScript : MonoBehaviour
             mColl.isTrigger = false;
             mRend.enabled = true;
             breakTimer = breakCounter;
+            bBlock.layer = 7;
         }
     }
 

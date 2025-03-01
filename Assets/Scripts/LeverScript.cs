@@ -37,14 +37,16 @@ public class LeverScript : MonoBehaviour
         }
     }
 
+
+
     bool IsActivated1()
     {
-        return Physics.BoxCast(bColl1.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(1, 1, 1), transform.rotation, 0.4f, playerLayer);
+        return Physics.BoxCast(bColl1.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(-1, 1, 0), transform.rotation, 0.4f, playerLayer);
     }
 
     bool IsActivated2()
     {
-        return Physics.BoxCast(bColl2.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(1, 1, 1), transform.rotation, 0.4f, playerLayer);
+        return Physics.BoxCast(bColl2.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0, 0, 1), transform.rotation, 0.4f, playerLayer);
     }
 
 
