@@ -8,6 +8,9 @@ public class CameraScript : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject camera3d;
     [SerializeField] GameObject camera2d;
+
+    public static bool rotation = true;
+
     private float _sensitivity = 360f;
     private Vector2 _mouseInput;
     private float _pitch;
@@ -29,6 +32,11 @@ public class CameraScript : MonoBehaviour
             camera2d.SetActive(true);
             camera3d.SetActive(false);
             transform.position = Vector3.Lerp(new Vector3(transform.position.x, transform.position.y, -10f), new Vector3(player.transform.position.x, player.transform.position.y, -10f), 0.1f);
+            if (rotation == false)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+                rotation = true;
+            }
         }
         else {
             camera2d.SetActive(false);

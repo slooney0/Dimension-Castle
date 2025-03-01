@@ -25,8 +25,6 @@ public class SpikeScript : MonoBehaviour
         {
             playerDead = true;
         }
-
-        Debug.Log(IsPlayerTouching());
     }
     
     private bool IsPlayerTouching()

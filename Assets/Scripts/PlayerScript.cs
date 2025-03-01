@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     private float jumpHeight = 8f;
 
     public static bool playerStandingBreakingBlock = false;
+    public static bool rotation = true;
 
     [SerializeField] GameObject mCamera;
     [SerializeField] LayerMask jumpReset;
@@ -29,6 +30,7 @@ public class PlayerScript : MonoBehaviour
     public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
     public float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
     private bool isGrounded = true;
+    private bool isGroundedBreak = true;
     private float groundCheckTimer = 0f;
     private float groundCheckDelay = 0.2f;
     private float playerHeight;
@@ -75,7 +77,7 @@ public class PlayerScript : MonoBehaviour
                 sRend.flipX = false;
             }
 
-            if (isGrounded && rb.linearVelocity.y == 0)
+            if ((isGrounded) && rb.linearVelocity.y == 0)
             {
                 groundCheckTimer = groundCheckDelay;
             }
@@ -97,8 +99,12 @@ public class PlayerScript : MonoBehaviour
             Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
             isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, jumpReset);
             playerStandingBreakingBlock = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, blockBreak);
-
-            Debug.Log(isGrounded);
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            if (rotation == false)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+                rotation = true;
+            }
         }
         else
         {
