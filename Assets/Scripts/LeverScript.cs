@@ -7,10 +7,6 @@ public class LeverScript : MonoBehaviour
     public static bool leverActive = false;
     public static bool resetLever = false;
 
-    [SerializeField] BoxCollider bColl1;
-    [SerializeField] BoxCollider bColl2;
-    [SerializeField] LayerMask playerLayer;
-
     [SerializeField] GameObject lever1;
     [SerializeField] GameObject lever2;
     
@@ -24,17 +20,19 @@ public class LeverScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsActivated1() && leverActive == false)
+        if (LeversScript.leverActive)
         {
             leverActive = true;
-            lever1.SetActive(false);
+            LeversScript.leverActive = false;
+            Debug.Log("Lever1");
         }
-        else if (IsActivated2() && leverActive == true)
+        else if (LeversScript2.leverActive)
         {
             leverActive = false;
             PlayerScript.rotation = false;
             CameraScript.rotation = false;
-            lever2.SetActive(false);
+            LeversScript2.leverActive = false;
+            Debug.Log("Lever2");
         }
         if (resetLever == true)
         {
@@ -51,16 +49,4 @@ public class LeverScript : MonoBehaviour
     {
         resetLever = true;
     }
-
-    bool IsActivated1()
-    {
-        return Physics.BoxCast(bColl1.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(-1, 1, 0), transform.rotation, 0.4f, playerLayer);
-    }
-
-    bool IsActivated2()
-    {
-        return Physics.BoxCast(bColl2.bounds.center, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0, 0, 1), transform.rotation, 0.4f, playerLayer);
-    }
-
-
 }

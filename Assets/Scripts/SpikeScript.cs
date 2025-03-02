@@ -15,8 +15,9 @@ public class SpikeScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 6)
-        {
+        {   
             playerDead = true;
+            PlayerScript.rotation = false;
         }
     }
 }

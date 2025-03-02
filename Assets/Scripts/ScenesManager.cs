@@ -21,15 +21,7 @@ public class ScenesManager : MonoBehaviour
         Level4,
         Level5,
         Level6,
-        Level7,
-        Level8,
-        Level9,
-        Level10,
-        Level11,
-        Level12,
-        Level13,
-        Level14,
-        Level15,
+        Animation,
         EndMenu
     }
 
@@ -48,4 +40,8 @@ public class ScenesManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public int getCurrentScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
+    }
 }
