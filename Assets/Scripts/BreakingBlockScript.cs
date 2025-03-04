@@ -9,7 +9,7 @@ public class BreakingBlockScript : MonoBehaviour
     private float regenTimer;
     private float regenCounter = 4;
     private float breakTimer;
-    private float breakCounter = 1;
+    private float breakCounter = 2;
 
     [SerializeField] MeshCollider mColl;
     [SerializeField] MeshRenderer mRend;
@@ -29,6 +29,7 @@ public class BreakingBlockScript : MonoBehaviour
         mColl.isTrigger = false;
         mRend.enabled = true;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -65,19 +66,19 @@ public class BreakingBlockScript : MonoBehaviour
             bBlock.layer = 7;
         }
 
-        if (breakTimer == 1 && broken == false)
+        if (breakTimer == breakCounter && broken == false)
         {
             sRend.sprite = s1;
         }
-        else if (breakTimer < 0.75f && broken == false)
+        else if (breakTimer > (breakCounter * 0.75f) && broken == false)
         {
             sRend.sprite = s2;
         }
-        else if (breakTimer < 0.5f && broken == false)
+        else if (breakTimer > (breakCounter * 0.5f) && broken == false)
         {
             sRend.sprite = s3;
         }
-        else if (breakTimer < 0.25f && broken == false)
+        else if (breakTimer > (breakCounter * 0.25f) && broken == false)
         {
             sRend.sprite = s4;
         }

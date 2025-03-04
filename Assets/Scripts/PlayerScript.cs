@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     private float playerSpeed = 6f;
     private float maxSpeed = 10f;
     private float minSpeed = 0.2f;
-    private float jumpHeight = 9f;
+    private float jumpHeight = 8f;
     public static bool rotation = true;
     private bool flipped = false;
     private float direction;
@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject mCamera;
     [SerializeField] LayerMask jumpReset;
     [SerializeField] LayerMask slippery;
+    [SerializeField] LayerMask spike;
     [SerializeField] SpriteRenderer sRend;
 
     private float isDashingTimer = 0.1f;
@@ -45,6 +46,7 @@ public class PlayerScript : MonoBehaviour
     public float ascendMultiplier = 20f; // Multiplies gravity for ascending to peak of jump
     private bool isGrounded = true;
     private bool isSlippery = false;
+    private bool isSpike = false;
     private float groundCheckTimer = 0f;
     private float groundCheckDelay = 0.2f;
     private float playerHeight;
@@ -68,7 +70,10 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SpikeScript.playerDead == true)
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+        isSpike = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance + 0.1f, spike);
+
+        if (isSpike || SpikeScript.playerDead)
         {
             PlayerDead();
         }
@@ -125,15 +130,6 @@ public class PlayerScript : MonoBehaviour
             {
                 anim.SetBool("Jumping", false);
             }
-            if (isJumpEnd)
-            {
-                anim.SetBool("JumpEnd", true);
-                isJumpEnd = false;
-            }
-            else
-            {
-                anim.SetBool("JumpEnd", false);
-            }
 
             if (flipped == true)
             {
@@ -164,7 +160,7 @@ public class PlayerScript : MonoBehaviour
                 groundCheckTimer = 0f;
             }
 
-            Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+            rayOrigin = transform.position + Vector3.up * 0.1f;
             isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, jumpReset);
             isSlippery = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, slippery);
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -254,7 +250,7 @@ public class PlayerScript : MonoBehaviour
             // Checking when we're on the ground and keeping track of our ground check delay
             if (!isGrounded && groundCheckTimer <= 0f)
             {
-                Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+                rayOrigin = transform.position + Vector3.up * 0.1f;
                 isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, jumpReset);
             }
             else
@@ -355,6 +351,10 @@ public class PlayerScript : MonoBehaviour
     {
         rb.linearVelocity = Vector3.zero;
         transform.position = new Vector3(0, 1.5f, 0);
+        while (transform.position != new Vector3(0, 1.5f, 0))
+        {
+            transform.position = (new Vector3(0, 1.5f, 0));
+        }
         CameraScript.rotation = false;
         rotation = false;
         SpikeScript.playerDead = false;

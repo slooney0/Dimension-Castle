@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
 
     public static bool rotation = true;
 
-    private float _sensitivity = 360f;
+    private float _sensitivity = 180f;
     private Vector2 _mouseInput;
     private float _pitch;
 

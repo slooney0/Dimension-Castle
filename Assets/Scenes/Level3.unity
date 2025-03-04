@@ -695,6 +695,9 @@ MonoBehaviour:
   slippery:
     serializedVersion: 2
     m_Bits: 512
+  spike:
+    serializedVersion: 2
+    m_Bits: 1024
   sRend: {fileID: 1547021602}
   dashingPower: 5
   dashingPower3d: 5
@@ -1567,7 +1570,7 @@ GameObject:
   - component: {fileID: 739166528}
   - component: {fileID: 739166527}
   - component: {fileID: 739166526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spike (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2116,7 +2119,7 @@ GameObject:
   - component: {fileID: 877344166}
   - component: {fileID: 877344165}
   - component: {fileID: 877344164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spike (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

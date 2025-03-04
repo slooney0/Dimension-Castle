@@ -10,6 +10,12 @@ public class DoorControllerScript : MonoBehaviour
     [SerializeField] GameObject key1;
     [SerializeField] GameObject key2;
 
+    private void Start()
+    {
+        doorActive = false;
+        resetKey = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -31,4 +37,5 @@ public class DoorControllerScript : MonoBehaviour
     {
         resetKey = true;
     }
+
 }

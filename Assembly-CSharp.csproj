@@ -68,14 +68,16 @@
     <Compile Include="Assets\Scripts\DoorControllerScript.cs" />
     <Compile Include="Assets\Scripts\LeversScript2.cs" />
     <Compile Include="Assets\Scripts\KeyScript.cs" />
+    <Compile Include="Assets\Scripts\isVisible2d.cs" />
     <Compile Include="Assets\Scripts\AnimationEvent.cs" />
     <Compile Include="Assets\Scripts\KeyScript2.cs" />
     <Compile Include="Assets\Scripts\UIManagerScript.cs" />
-    <Compile Include="Assets\Scripts\isVisible3d1.cs" />
+    <Compile Include="Assets\Scripts\isTileVisible3d.cs" />
     <Compile Include="Assets\Scripts\SpikeScript.cs" />
     <Compile Include="Assets\Scripts\BreakingBlockScript2.cs" />
     <Compile Include="Assets\Scripts\ScenesManager.cs" />
     <Compile Include="Assets\Scripts\LeversScript.cs" />
+    <Compile Include="Assets\Scripts\Exists3d.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
   </ItemGroup>
   <ItemGroup>
