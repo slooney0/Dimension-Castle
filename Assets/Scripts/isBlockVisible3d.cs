@@ -1,32 +1,32 @@
 using UnityEngine;
 
-public class isVisible3d : MonoBehaviour
+public class isBlockVisible3d : MonoBehaviour
 {
 
-    [SerializeField] SpriteRenderer sRend;
+    [SerializeField] MeshRenderer mRend;
     [SerializeField] MeshCollider mColl;
     private bool resetRend;
     private bool leverActive;
 
     void Start()
     {
-        sRend.enabled = true;
+        mRend.enabled = true;
         mColl.enabled = true;
         resetRend = false;
     }
 
-    
+
     void Update()
     {
         if (LeverScript.leverActive)
         {
-            sRend.enabled = false;
+            mRend.enabled = false;
             mColl.enabled = false;
             leverActive = true;
         }
         else if (resetRend)
         {
-            sRend.enabled = true;
+            mRend.enabled = true;
             mColl.enabled = true;
             resetRend = false;
         }

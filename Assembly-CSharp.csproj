@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\AnimationEvent.cs" />
     <Compile Include="Assets\Scripts\KeyScript2.cs" />
     <Compile Include="Assets\Scripts\UIManagerScript.cs" />
+    <Compile Include="Assets\Scripts\isBlockVisible3d.cs" />
     <Compile Include="Assets\Scripts\isTileVisible3d.cs" />
     <Compile Include="Assets\Scripts\SpikeScript.cs" />
     <Compile Include="Assets\Scripts\BreakingBlockScript2.cs" />

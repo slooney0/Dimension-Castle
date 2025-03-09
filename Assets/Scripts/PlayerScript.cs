@@ -18,7 +18,6 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] private Animator anim;
     private bool isJumping;
-    private bool isJumpEnd;
     private bool isJumpStart;
 
     [SerializeField] GameObject mCamera;
@@ -115,11 +114,14 @@ public class PlayerScript : MonoBehaviour
             {
                 isJumping = false;
                 isJumpStart = false;
-                isJumpEnd = true;
             }
-            if ((!isGrounded || !isSlippery) && Mathf.Abs(dirY) > 0)
+            if ((!isGrounded && !isSlippery) && Mathf.Abs(rb.linearVelocity.y) > 0)
             {
                 isJumping = true;
+            }
+            else
+            {
+                isJumping = false;
             }
             
             if (isJumping)
@@ -175,7 +177,7 @@ public class PlayerScript : MonoBehaviour
                 transform.rotation = new Quaternion(0, 0, 0, 0);
             }
 
-            if (ScenesManager.instance.getCurrentScene() >= 3)
+            if (ScenesManager.instance.getCurrentScene() > 3)
             {
                 if (Input.GetKeyDown(KeyCode.F) && isDashingTimer <= 0)
                 {
@@ -184,7 +186,7 @@ public class PlayerScript : MonoBehaviour
                 }
                 else if (isSlippery && Mathf.Abs(rb.linearVelocity.x) <= playerSpeed + 2f && Mathf.Abs(rb.linearVelocity.x) >= minSpeed && dirX != 0)
                 {
-                    rb.AddForce(new Vector3(Mathf.Abs(rb.linearVelocity.x) * dirX * 1.2f, rb.linearVelocity.y)); //Maybe delete rb.linearVelocity.y
+                    rb.AddForce(new Vector3(Mathf.Abs(rb.linearVelocity.x) * dirX * 1.2f, 0)); //Maybe delete rb.linearVelocity.y
                 }
                 else if (isDashingTimer <= 0 && !isGrounded)
                 {
@@ -204,9 +206,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         rb.AddForce(new Vector3((-rb.linearVelocity.x) * 0.1f, 0));
                     }
-                    else if (!isSlippery && rb.linearVelocity.x != 0)
+                    else if ((dirX == 1 && rb.linearVelocity.x < 0) || (dirX == -1 && rb.linearVelocity.x > 0))
                     {
-                        rb.AddForce(new Vector3((-rb.linearVelocity.x) * 0.1f, 0));
+                        rb.AddForce(new Vector3((-rb.linearVelocity.x) * 0.2f, 0));
+                    }
+                    else if (dirX == 0)
+                    {
+                        rb.linearVelocity = new Vector3(dirX * playerSpeed, rb.linearVelocity.y, 0);
                     }
                 }
                 else if (isDashingTimer <= 0)

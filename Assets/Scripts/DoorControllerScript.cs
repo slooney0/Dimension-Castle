@@ -30,6 +30,8 @@ public class DoorControllerScript : MonoBehaviour
             resetKey = false;
             key1.SetActive(true);
             key2.SetActive(true);
+            KeyScript2.keyActive = false;
+            KeyScript.keyActive = false;
         }
     }
 

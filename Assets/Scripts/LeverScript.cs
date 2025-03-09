@@ -24,7 +24,7 @@ public class LeverScript : MonoBehaviour
         {
             leverActive = true;
             LeversScript.leverActive = false;
-            Debug.Log("Lever1");
+            lever2.SetActive(true);
         }
         else if (LeversScript2.leverActive)
         {
@@ -32,7 +32,7 @@ public class LeverScript : MonoBehaviour
             PlayerScript.rotation = false;
             CameraScript.rotation = false;
             LeversScript2.leverActive = false;
-            Debug.Log("Lever2");
+            lever1.SetActive(true);
         }
         if (resetLever == true)
         {
