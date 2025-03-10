@@ -9848,7 +9848,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   sRend: {fileID: 149705737}
-  dashingPower: 5
+  dashingPower: 40
   dashingPower3d: 5
   MoveSpeed: 6
   jumpForce: 15

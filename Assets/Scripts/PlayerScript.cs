@@ -16,6 +16,7 @@ public class PlayerScript : MonoBehaviour
     private bool flipped = false;
     private float direction;
 
+    //[SerializeField] TrailRenderer tRend;
     [SerializeField] private Animator anim;
     private bool isJumping;
     private bool isJumpStart;
@@ -28,8 +29,8 @@ public class PlayerScript : MonoBehaviour
 
     private float isDashingTimer = 0.1f;
     private float isDashingCounter = 0.1f;
-    [SerializeField] float dashingPower = 5f;
-    [SerializeField] float dashingPower3d = 5f;
+    private float dashingPower = 40f;
+    private float dashingPower3d = 40f;
     private float dashCooldownTimer = 0.75f;
     private float dashCooldownCounter = 0.75f;
 
@@ -179,12 +180,23 @@ public class PlayerScript : MonoBehaviour
 
             if (ScenesManager.instance.getCurrentScene() > 3)
             {
-                if (Input.GetKeyDown(KeyCode.F) && isDashingTimer <= 0)
+                if (Input.GetKeyDown(KeyCode.F) && isDashingTimer <= 0 && dashCooldownTimer <= 0)
                 {
-                    rb.linearVelocity = new Vector3(Mathf.Abs(rb.linearVelocity.x) * (direction * dashingPower), 0, 0);
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x + (direction * dashingPower), 0, 0); //TODO: Maybe Change
                     isDashingTimer = isDashingCounter;
+                    dashCooldownTimer = dashCooldownCounter;
+                    //tRend.emitting = true;
                 }
-                else if (isSlippery && Mathf.Abs(rb.linearVelocity.x) <= playerSpeed + 2f && Mathf.Abs(rb.linearVelocity.x) >= minSpeed && dirX != 0)
+                if (isDashingTimer >= 0)
+                {
+                    isDashingTimer -= Time.deltaTime;
+                }
+                else if (dashCooldownCounter >= 0)
+                {
+                    //tRend.emitting = false;
+                    dashCooldownTimer -= Time.deltaTime;
+                }
+                if (isSlippery && Mathf.Abs(rb.linearVelocity.x) <= playerSpeed + 2f && Mathf.Abs(rb.linearVelocity.x) >= minSpeed && dirX != 0)
                 {
                     rb.AddForce(new Vector3(Mathf.Abs(rb.linearVelocity.x) * dirX * 1.2f, 0)); //Maybe delete rb.linearVelocity.y
                 }
@@ -219,10 +231,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     rb.linearVelocity = new Vector3((dirX * playerSpeed), rb.linearVelocity.y);
                 }
-                else
-                {
-                    isDashingTimer -= Time.deltaTime;
-                }
+
             }
             else
             {
@@ -291,12 +300,7 @@ public class PlayerScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.F) && isDashingTimer <= 0 && dashCooldownTimer <= 0)
             {
-                movement = (transform.right * moveHorizontal + transform.forward * moveForward * dashingPower3d);
-                targetVelocity = movement * MoveSpeed;
-                velocity = rb.linearVelocity;
-                velocity.x = targetVelocity.x;
-                velocity.z = targetVelocity.z;
-                rb.linearVelocity = velocity;
+                rb.linearVelocity = (rb.linearVelocity + (dashingPower3d * transform.forward));
                 isDashingTimer = isDashingCounter;
                 dashCooldownTimer = dashCooldownCounter;
             }
@@ -357,10 +361,7 @@ public class PlayerScript : MonoBehaviour
     {
         rb.linearVelocity = Vector3.zero;
         transform.position = new Vector3(0, 1.5f, 0);
-        while (transform.position != new Vector3(0, 1.5f, 0))
-        {
-            transform.position = (new Vector3(0, 1.5f, 0));
-        }
+        //tRend.emitting = false;
         CameraScript.rotation = false;
         rotation = false;
         SpikeScript.playerDead = false;
